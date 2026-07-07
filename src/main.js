@@ -5,7 +5,9 @@
 async function run() {
     console.log('hello generator service v2');
 
-    await new Promise(() => {});
+    setInterval(() => {
+        console.log('still alive');
+    }, 60000);
 
 
   // const client = new SQSClient({});
