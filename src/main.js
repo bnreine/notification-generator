@@ -3,11 +3,10 @@
 // const QUEUE_URL = process.env.QUEUE_URL;
 
 async function run() {
-    try {
-        console.log('hello generator service')
-    } catch (err) {
-        console.log(err);
-    }
+    console.log('hello generator service');
+
+    await new Promise(() => {});
+
 
   // const client = new SQSClient({});
 
@@ -33,7 +32,4 @@ async function run() {
   // }
 }
 
-run().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+run().catch(console.error);
