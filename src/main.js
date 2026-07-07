@@ -3,7 +3,7 @@
 // const QUEUE_URL = process.env.QUEUE_URL;
 
 async function run() {
-    console.log('hello generator service');
+    console.log('hello generator service v2');
 
     await new Promise(() => {});
 
