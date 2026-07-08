@@ -1,37 +1,35 @@
-// const { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } = require('@aws-sdk/client-sqs');
-//
-// const QUEUE_URL = process.env.QUEUE_URL;
+const { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } = require('@aws-sdk/client-sqs');
 
-async function run() {
-    console.log('hello generator service v2');
+async function runFn() {
+    console.log('hello generator service v3');
+    console.log('env url: ',process.env.NOTIFICATION_GENERATOR_QUEUE_URL)
+  const client = new SQSClient({});
 
-    setInterval(() => {
-        console.log('still alive');
-    }, 60000);
+  while (true) {
+    try {
+
+      const response = await client.send(new ReceiveMessageCommand({
+        QueueUrl: process.env.NOTIFICATION_GENERATOR_QUEUE_URL,
+        MaxNumberOfMessages: 10,
+        WaitTimeSeconds: 20,
+      }));
 
 
-  // const client = new SQSClient({});
+      for (const message of response.Messages ?? []) {
+        console.log(JSON.stringify(message.Body));
 
-  // while (true) {
-  //   try {
-  //     const response = await client.send(new ReceiveMessageCommand({
-  //       QueueUrl: QUEUE_URL,
-  //       MaxNumberOfMessages: 10,
-  //       WaitTimeSeconds: 20,
-  //     }));
-  //
-  //     for (const message of response.Messages ?? []) {
-  //       console.log(JSON.stringify(message.Body));
-  //
-  //       await client.send(new DeleteMessageCommand({
-  //         QueueUrl: QUEUE_URL,
-  //         ReceiptHandle: message.ReceiptHandle,
-  //       }));
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+        await client.send(new DeleteMessageCommand({
+          QueueUrl: process.env.NOTIFICATION_GENERATOR_QUEUE_URL,
+          ReceiptHandle: message.ReceiptHandle,
+        }));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
-run().catch(console.error);
+runFn().catch(console.error);
+
+
+module.exports.run = runFn;
