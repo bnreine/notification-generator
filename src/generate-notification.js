@@ -12,7 +12,7 @@ const generateNotification = async (notificationConfig) => {
     if(mapped) {
         return await mapped(notificationConfig)
     }
-    throw new Error('Unable to generate reminder notification')
+    throw new Error('Unable to generate notification')
 }
 
 module.exports = generateNotification
