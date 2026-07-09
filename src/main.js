@@ -20,7 +20,8 @@ async function runFn() {
         console.log(JSON.stringify(message.Body));
         const notificationConfig = JSON.parse(message.Body)
         const notificationToStore = await generateNotification(notificationConfig);
-        const notification = await storeNotification(notificationToStore);
+        // const notification = await storeNotification(notificationToStore);
+        const notification = notificationConfig
         await passToDelivery(notification);
 
         await client.send(new DeleteMessageCommand({
