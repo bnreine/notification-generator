@@ -1,5 +1,7 @@
 const { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } = require('@aws-sdk/client-sqs');
-const processMessage = require('./process-message')
+const generateNotification = require('./generate-notification')
+const storeNotification = require("./store-notification");
+const passToDelivery = require("./pass-to-delivery");
 
 async function runFn() {
   const client = new SQSClient({});
@@ -16,8 +18,10 @@ async function runFn() {
 
       for (const message of response.Messages ?? []) {
         console.log(JSON.stringify(message.Body));
-        const parsedMessageBody = JSON.parse(message.Body)
-        await processMessage(parsedMessageBody);
+        const notificationConfig = JSON.parse(message.Body)
+        const notificationToStore = await generateNotification(notificationConfig);
+        const notification = await storeNotification(notificationToStore);
+        await passToDelivery(notification);
 
         await client.send(new DeleteMessageCommand({
           QueueUrl: process.env.NOTIFICATION_GENERATOR_QUEUE_URL,

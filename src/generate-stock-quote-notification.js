@@ -33,6 +33,7 @@ const getFinnhubClient = async ()=> {
 
 async function getQuote(symbol) {
     const finnClient = await getFinnhubClient()
+    await new Promise(resolve => setTimeout(resolve, 1000)); // wait 1s to not go over the rate limit of finnhub
     return await new Promise((resolve, reject) => {
         finnClient.quote(symbol, (error, data) => {
             if (error) {
@@ -44,11 +45,11 @@ async function getQuote(symbol) {
     });
 }
 
-const processStockQuote = async (message)=>{
-    const quoteData = await getQuote(message.config.stock);
+const generateStockQuoteNotification = async (notificationConfig)=>{
+    const quoteData = await getQuote(notificationConfig.config.stock);
     console.log(quoteData)
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // figure out what notification should be here and then return it
     return
 }
 
-module.exports = processStockQuote
+module.exports = generateStockQuoteNotification
