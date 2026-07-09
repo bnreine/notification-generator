@@ -9,7 +9,9 @@
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.840.0",
     "aws-cdk-lib": "2.256.1",
-    "constructs": "^10.5.0"
+    "constructs": "^10.5.0",
+    "finnhub": "^2.0.15",
+    "@aws-sdk/client-secrets-manager": "^3.1082.0"
   },
   "devDependencies": {
     "jest": "^30"
