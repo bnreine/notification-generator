@@ -48,8 +48,7 @@ async function getQuote(symbol) {
 const generateStockQuoteNotification = async (notificationConfig)=>{
     const quoteData = await getQuote(notificationConfig.config.stock);
     console.log(quoteData)
-    // figure out what notification should be here and then return it
-    return
+    return {message: `The price of ${notificationConfig.config.stock} is $${quoteData.c}`}
 }
 
 module.exports = generateStockQuoteNotification

@@ -6,7 +6,7 @@ const mapping = {
     reminder: generateReminderNotification
 }
 
-const generateNotification = async (notificationConfig) => {
+const generateNotificationPayload = async (notificationConfig) => {
     const {config} = notificationConfig
     const mapped =  mapping[config?.type]
     if(mapped) {
@@ -15,4 +15,4 @@ const generateNotification = async (notificationConfig) => {
     throw new Error('Unable to generate notification')
 }
 
-module.exports = generateNotification
+module.exports = generateNotificationPayload
