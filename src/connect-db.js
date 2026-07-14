@@ -18,7 +18,7 @@ const connectDB = async () => {
     const secret = JSON.parse(response.SecretString);
 
     dbPool = new Pool({
-        host: 'localhost',
+        host: process.env.NODE_ENV === 'dev' ? 'localhost' : secret.host,
         port: secret.port,
         database: secret.dbname,
         user: secret.username,
