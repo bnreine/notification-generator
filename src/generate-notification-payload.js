@@ -1,9 +1,12 @@
 const generateReminderNotification = require('./generate-reminder-notification')
 const generateStockQuoteNotification = require('./generate-stock-quote-notification')
 
+const generateCountdownNotification = require('./generate-countdown-notification')
+
 const mapping = {
     stockQuoteAlert: generateStockQuoteNotification,
-    reminder: generateReminderNotification
+    reminder: generateReminderNotification,
+    countdown: generateCountdownNotification
 }
 
 const generateNotificationPayload = async (notificationConfig) => {
