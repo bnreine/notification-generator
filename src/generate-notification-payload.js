@@ -12,7 +12,7 @@ const generateNotificationPayload = async (notificationConfig) => {
     if(mapped) {
         return await mapped(notificationConfig)
     }
-    throw new Error('Unable to generate notification')
+    throw new Error('Unable to generate notification payload, type not implemented')
 }
 
 module.exports = generateNotificationPayload

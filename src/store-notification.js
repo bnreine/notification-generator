@@ -1,7 +1,6 @@
 const {getDbPool} = require('./connect-db');
 
 const storeNotification = async ({ notificationPayload, notificationConfig }) => {
-    try {
         const dbPool = getDbPool();
 
         const id = crypto.randomUUID();
@@ -18,9 +17,6 @@ const storeNotification = async ({ notificationPayload, notificationConfig }) =>
             queryString
         );
         return response.rows[0];
-    } catch (err){
-        throw new Error(err)
-    }
 };
 
 module.exports = storeNotification;
