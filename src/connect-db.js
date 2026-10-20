@@ -3,6 +3,7 @@ const {
     SecretsManagerClient,
     GetSecretValueCommand,
 } = require('@aws-sdk/client-secrets-manager');
+const fs = require("fs");
 
 let dbPool
 
@@ -26,7 +27,8 @@ const connectDB = async () => {
         max: 5,
         idleTimeoutMillis: 30000,
         ssl: {
-            rejectUnauthorized: false // Necessary for typical AWS RDS SSL certificates if not passing the exact root CA
+            ca: fs.readFileSync(`${__dirname}/certs/global-bundle.pem`, 'utf-8'),
+            rejectUnauthorized: true
         }
     });
 
